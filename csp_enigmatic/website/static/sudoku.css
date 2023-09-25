@@ -1,0 +1,30 @@
+.sudoku {
+    border-collapse: collapse;
+    margin: 20px auto;
+}
+
+.sudoku.outer-bold {
+    border: 2px solid #000;
+}
+
+.sudoku-cell {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.sudoku-cell:nth-child(3n) {
+    border-right: 2px solid #000;
+}
+
+tr:nth-child(3n) .sudoku-cell {
+    border-bottom: 2px solid #000;
+}
+
+.highlighted {
+    background-color: #ffcc00;
+    font-weight: bold;
+}

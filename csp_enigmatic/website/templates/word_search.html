@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-container">
+    <p><a href="/play_word_search">Igraj osmosmjerku</a></p>
+    <table class="word_search">
+        {% for row in grid %}
+        <tr>
+            {% for cell in row %}
+                {% if cell['found'] %}
+                    <td class="word_search-cell highlighted-word">{{ cell['letter'] }}</td>
+                {% else %}
+                    <td class="word_search-cell">{{ cell['letter'] if 'letter' in cell else cell }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <form method="POST">
+        <button type="submit" name="move_action" value="generate" {% if not grid or added_words|length < 5 or added_words|length > 10 %}disabled{% endif %}>Generiši</button>
+        <button type="submit" name="move_action" value="solve">Riješi</button>
+        <input type="text" name="new_word" placeholder="Unesite riječ" {% if added_words|length > 10 %}disabled{% endif %}>
+        <button type="submit" name="move_action" value="add_word" {% if added_words|length > 10 %}disabled{% endif %}>Dodaj riječ</button>
+        <button type="submit" name="move_action" value="reset">Resetuj</button>
+    </form>
+    <div class="word-list">
+        {% if added_words|length < 5 %}
+        <p class="warning-message">Dodajte barem 5 riječi da biste generisali osmosmjerku.</p>
+        {% elif added_words|length > 10 %}
+        <p class="warning-message">Dosegli ste limit od 10 riječi.</p>
+        {% endif %}
+        <h3>Dodate riječi:</h3>
+        <ul>
+            {% for word in added_words %}
+                <li>{{ word }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSP_Enigmatic</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <link rel="stylesheet" type="text/css" href="static/sudoku.css">
+    <link rel="stylesheet" type="text/css" href="static/crossword.css">
+    <link rel="stylesheet" type="text/css" href="static/word_search.css">
+    <link rel="stylesheet" type="text/css" href="static/play_sudoku.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a id="home" class="menu-link" href="/">Početna strana</a></li>
+                <li><a id="sudoku" class="menu-link" href="/sudoku">Sudoku</a></li>
+                <!-- <li><a id="crossword" class="menu-link" href="/crossword">Ukrštenica</a></li> -->
+                <li><a id="word_search" class="menu-link" href="/word_search">Osmosmjerka</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

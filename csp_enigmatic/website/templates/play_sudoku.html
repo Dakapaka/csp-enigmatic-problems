@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-container">
+    <p><a href="/play_sudoku">Igraj sudoku</a></p>
+
+    <div class="sudoku-container">
+        <table class="sudoku">
+            <thead>
+                <tr>
+                    <th class="sudoku-empty-cell"></th>
+                    {% for col_number in range(1, 10) %}
+                        <th class="sudoku-column-number">{{ col_number }}</th>
+                        {% if col_number % 3 == 0 and col_number < 9 %}
+                            <th class="vertical-line"></th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row_number in range(1, 10) %}
+                    <tr>
+                        <th class="sudoku-row-number">{{ row_number }}</th>
+                        {% for col_number in range(1, 10) %}
+                            <td class="play_sudoku-cell">
+                                {% if grid[row_number - 1][col_number - 1] != 0 %}
+                                    {{ grid[row_number - 1][col_number - 1] }}
+                                {% endif %}
+                            </td>
+                            {% if col_number % 3 == 0 and col_number < 9 %}
+                                <td class="vertical-line"></td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    {% if row_number % 3 == 0 and row_number < 9 %}
+                        <tr>
+                            <td class="horizontal-line" colspan="19"></td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>        
+    </div>
+    <form method="POST" action="{{ url_for('views.play_sudoku') }}" class="sudoku-form">
+        <label for="row">Red:</label>
+        <input type="number" min="1" max="9" name="row" id="row" required>
+
+        <label for="column">Kolona:</label>
+        <input type="number" min="1" max="9" name="column" id="column" required>
+
+        <label for="number">Broj:</label>
+        <input type="number" min="1" max="9" name="number" id="number" required>
+
+        <button type="submit" class="sudoku-button" name="move_action" value="play">Odigraj broj</button>
+    </form>
+
+    <form method="POST">
+        <button type="submit" class="sudoku-button" name="move_action" value="solve">Riješi</button>
+    </form>
+
+    <form method="POST">
+        <label for="difficulty">Težina:</label>
+        <input type="radio" name="difficulty" value="easy" id="easy" required>
+        <label for="easy">Lako</label>
+        
+        <input type="radio" name="difficulty" value="medium" id="medium">
+        <label for="medium">Srednje</label>
+        
+        <input type="radio" name="difficulty" value="hard" id="hard">
+        <label for="hard">Teško</label>
+    
+        <button type="submit" class="sudoku-button" name="move_action" value="generate">Generiši novi sudoku</button>
+    </form>
+
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+</div>
+{% endblock %}

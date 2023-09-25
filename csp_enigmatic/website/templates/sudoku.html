@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-container">
+    <p><a href="/play_sudoku">Igraj sudoku</a></p>
+
+    <table class="sudoku outer-bold">
+        {% for row_index in range(sudoku_log[current_move_number]|length) %}
+        <tr>
+            {% for col_index in range(sudoku_log[current_move_number][row_index]|length) %}
+            {% set cell = sudoku_log[current_move_number][row_index][col_index] %}
+            {% set cell_coordinates = [row_index, col_index] %}
+            <td class="sudoku-cell{% if cell_coordinates in coordinates_log[current_move_number] %} highlighted{% endif %}">
+                {% if cell != 0 %}
+                    {{ cell }}
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <form method="post">
+        <button type="submit" name="move_action" value="previous">Prethodno stanje</button>
+        <button type="submit" name="move_action" value="next">Naredno stanje</button>
+        <button type="submit" name="move_action" value="solve">Riješi</button>
+        <button type="submit" name="move_action" value="reset">Resetuj</button>
+        <button type="submit" name="move_action" value="generate">Novi sudoku</button>
+    </form>
+    <hr>
+    <p>Stanje: {{ current_move_number }}/{{ move_number }}</p>
+    <hr>
+    {% if move_log %}
+    <h3>Zapisnik:</h3>
+    <ul>
+        {% for move in move_log[current_move_number] %}
+        <li>{{ move }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

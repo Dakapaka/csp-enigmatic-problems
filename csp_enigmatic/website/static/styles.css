@@ -1,0 +1,55 @@
+.menu-link {
+    text-decoration: none; 
+    color: #333; 
+    font-weight: bold;
+    font-size: 18px;
+    display: block;
+    float: left;
+    margin-right: 20px;
+}
+
+.menu-link:hover {
+    color: #ff6600;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+}
+
+.content-container {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px; 
+}
+
+form button[type="submit"] {
+    background-color: #adafb1;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button[type="submit"]:hover {
+    background-color: #5a6169; 
+}
+
+body {
+    background-color: #f0f0f0;
+}
+
+.home-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}

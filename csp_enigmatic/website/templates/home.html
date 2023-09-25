@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-container">
+    <div class="sudoku-word-search-container home-container">
+        <div class="sudoku-container">
+            <p><a href="/play_sudoku">Igraj sudoku</a></p>
+
+            <table class="sudoku outer-bold">
+                {% for row in sudoku %}
+                <tr>
+                    {% for cell in row %}
+                    <td class="sudoku-cell">
+                        {% if cell != 0 %}
+                            {{ cell }}
+                        {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="word-search-container">
+            <p><a href="/play_word_search">Igraj osmosmjerku</a></p>
+            <table class="word_search">
+                {% for row in word_search %}
+                <tr>
+                    {% for cell in row %}
+                        {% if cell['found'] %}
+                            <td class="word_search-cell highlighted-word">{{ cell['letter'] }}</td>
+                        {% else %}
+                            <td class="word_search-cell">{{ cell['letter'] if 'letter' in cell else cell }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

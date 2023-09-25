@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content-container">
+    <p><a href="/play_word_search">Igraj osmosmjerku</a></p>
+    <table class="word_search">
+        <thead>
+            <tr>
+                <th></th> 
+                {% for col_number in range(1, 11) %}
+                    <th class="column-number">{{ col_number }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row_number in range(1, 11) %}
+                <tr>
+                    <th class="row-number">{{ row_number }}</th>
+                    {% for cell in grid[row_number - 1] %}
+                        {% if cell['found'] %}
+                            {% set coordinates = (row_number - 1, loop.index0) %}
+                            {% if coordinates in guessed_words_coordinates.values() %}
+                                <td class="word_search-cell found-word">{{ cell['letter'] }}</td>
+                            {% else %}
+                                <td class="word_search-cell">{{ cell['letter'] }}</td>
+                            {% endif %}
+                        {% else %}
+                            <td class="word_search-cell">{{ cell['letter'] if 'letter' in cell else cell }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>        
+        
+    </table>
+
+    <hr>
+
+    <form method="POST" action="{{ url_for('views.play_word_search') }}" class="sudoku-form">
+        <div class="row">
+            <label for="row_start">Red početka riječi:</label>
+            <input type="number" min="1" max="10" name="row_start" id="row_start" required>
+        </div>
+        <div class="row">
+            <label for="column_start">Kolona početka riječi:</label>
+            <input type="number" min="1" max="10" name="column_start" id="column_start" required>
+        </div>
+    
+        <div class="row">
+            <label for="row_end">Red kraja riječi:</label>
+            <input type="number" min="1" max="10" name="row_end" id="row_end" required>
+        </div>
+        <div class="row">
+            <label for="column_end">Kolona kraja riječi:</label>
+            <input type="number" min="1" max="10" name="column_end" id="column_end" required>
+        </div>
+        <button type="submit" class="sudoku-button" name="move_action" value="play_word_search">Odigraj</button>
+    </form>    
+    <form method="POST">
+        <button type="submit" name="move_action" value="generate">Generiši novu osmosmjerku</button>
+        <button type="submit" name="move_action" value="solve">Riješi</button>
+    </form>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    <h3>Pronađene riječi:</h3>
+    <ul>
+        {% for word in found_words %}
+            <li>{{ word }}</li>
+        {% endfor %}
+    </ul>
+    <hr>
+    <h3>Moguće riječi:</h3>
+    <ul>
+        {% for word in added_words %}
+            <li>{{ word }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
